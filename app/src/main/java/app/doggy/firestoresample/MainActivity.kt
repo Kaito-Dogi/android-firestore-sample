@@ -34,10 +34,31 @@ class MainActivity : AppCompatActivity() {
                 .addOnFailureListener { e ->
                     Log.w(ADD_TAG, "Error adding document", e)
                 }
+
+            val docRef = db.collection("users")
+            docRef.addSnapshotListener { value, e ->
+                if (e != null) {
+                    Log.w(READ_TAG, "Listen failed.", e)
+                    return@addSnapshotListener
+                }
+
+                if (value != null) {
+                    val users = ArrayList<String>()
+                    for (doc in value) {
+                        doc.getString("nickname")?.let {
+                            users.add(it)
+                        }
+                    }
+                    binding.textView.text = users.toString()
+                } else {
+                    Log.d(READ_TAG, "Current data: null")
+                }
+            }
         }
     }
 
     companion object {
         private const val ADD_TAG = "add_user"
+        private const val READ_TAG = "read_user"
     }
 }
