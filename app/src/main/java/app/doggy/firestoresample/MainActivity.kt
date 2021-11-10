@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import app.doggy.firestoresample.databinding.ActivityMainBinding
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 
 class MainActivity : AppCompatActivity() {
@@ -20,9 +21,9 @@ class MainActivity : AppCompatActivity() {
 
         binding.button.setOnClickListener {
             // Create a new user with a first and last name
-            val user = hashMapOf(
-                "nickname" to binding.nicknameEditText.text.toString(),
-                "course" to binding.courseEditText.text.toString(),
+            val user = User(
+                nickname = binding.nicknameEditText.text.toString(),
+                course = binding.courseEditText.text.toString(),
             )
 
             // Add a new document with a generated ID
@@ -43,11 +44,14 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 if (value != null) {
-                    val users = ArrayList<String>()
+                    val users = ArrayList<User>()
                     for (doc in value) {
-                        doc.getString("nickname")?.let {
-                            users.add(it)
-                        }
+                        val user = doc.toObject<User>()
+                        users.add(User(
+                            user.nickname,
+                            user.course,
+                        ))
+                        Log.d(READ_TAG, value.toString())
                     }
                     binding.textView.text = users.toString()
                 } else {
