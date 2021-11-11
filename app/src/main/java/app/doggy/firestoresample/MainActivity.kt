@@ -22,8 +22,8 @@ class MainActivity : AppCompatActivity() {
         binding.button.setOnClickListener {
             // Create a new task with a first and last name
             val task = Task(
-                title = binding.nicknameEditText.text.toString(),
-                date = binding.courseEditText.text.toString(),
+                title = binding.titleEditText.text.toString(),
+                date = binding.dateEditText.text.toString(),
             )
 
             // Add a new document with a generated ID
