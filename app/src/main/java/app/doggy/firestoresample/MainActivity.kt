@@ -48,8 +48,9 @@ class MainActivity : AppCompatActivity() {
                     for (doc in value) {
                         val task = doc.toObject<Task>()
                         tasks.add(Task(
-                            task.title,
-                            task.date,
+                            id = task.id,
+                            title = task.title,
+                            date = task.date,
                         ))
                         Log.d(READ_TAG, value.toString())
                     }
