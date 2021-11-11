@@ -12,19 +12,19 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/nickname_edit_text"
+            android:id="@+id/title_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="nickname"
+            android:hint="title"
             android:inputType="textPersonName" />
 
         <EditText
-            android:id="@+id/course_edit_text"
+            android:id="@+id/date_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="course"
+            android:hint="date"
             android:inputType="textPersonName"
             android:minHeight="48dp" />
 

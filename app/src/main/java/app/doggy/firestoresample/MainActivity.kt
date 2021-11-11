@@ -20,15 +20,15 @@ class MainActivity : AppCompatActivity() {
         val db = Firebase.firestore
 
         binding.button.setOnClickListener {
-            // Create a new user with a first and last name
-            val user = User(
-                nickname = binding.nicknameEditText.text.toString(),
-                course = binding.courseEditText.text.toString(),
+            // Create a new task with a first and last name
+            val task = Task(
+                title = binding.nicknameEditText.text.toString(),
+                date = binding.courseEditText.text.toString(),
             )
 
             // Add a new document with a generated ID
-            db.collection("users")
-                .add(user)
+            db.collection("tasks")
+                .add(task)
                 .addOnSuccessListener { documentReference ->
                     Log.d(ADD_TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
                 }
@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
                     Log.w(ADD_TAG, "Error adding document", e)
                 }
 
-            val docRef = db.collection("users")
+            val docRef = db.collection("tasks")
             docRef.addSnapshotListener { value, e ->
                 if (e != null) {
                     Log.w(READ_TAG, "Listen failed.", e)
@@ -44,16 +44,16 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 if (value != null) {
-                    val users = ArrayList<User>()
+                    val tasks = ArrayList<Task>()
                     for (doc in value) {
-                        val user = doc.toObject<User>()
-                        users.add(User(
-                            user.nickname,
-                            user.course,
+                        val task = doc.toObject<Task>()
+                        tasks.add(Task(
+                            task.title,
+                            task.date,
                         ))
                         Log.d(READ_TAG, value.toString())
                     }
-                    binding.textView.text = users.toString()
+                    binding.textView.text = tasks.toString()
                 } else {
                     Log.d(READ_TAG, "Current data: null")
                 }
@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val ADD_TAG = "add_user"
-        private const val READ_TAG = "read_user"
+        private const val ADD_TAG = "add_task"
+        private const val READ_TAG = "read_task"
     }
 }
