@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         // ボタンを押したときの処理
-        binding.button.setOnClickListener {
+        binding.addButton.setOnClickListener {
             val task = Task(
                 title = binding.titleEditText.text.toString(),
                 date = binding.dateEditText.text.toString(),
