@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import app.doggy.firestoresample.databinding.TaskListItemBinding
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class TaskAdapter: ListAdapter<Task, TaskViewHolder>(diffUtilItemCallback) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
@@ -23,7 +25,7 @@ class TaskViewHolder(
 ): RecyclerView.ViewHolder(binding.root) {
     fun bind(task: Task) {
         binding.titleTextView.text = task.title
-        binding.dateTextView.text = task.date
+        binding.dateTextView.text = SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.JAPANESE).format(task.createdAt)
     }
 }
 

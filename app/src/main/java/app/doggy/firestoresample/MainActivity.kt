@@ -58,7 +58,6 @@ class MainActivity : AppCompatActivity() {
         binding.addButton.setOnClickListener {
             val task = Task(
                 title = binding.titleEditText.text.toString(),
-                date = binding.dateEditText.text.toString(),
             )
 
             db.collection(TASKS_PATH)

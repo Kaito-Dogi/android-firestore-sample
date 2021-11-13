@@ -1,10 +1,11 @@
 package app.doggy.firestoresample
 
 import com.google.firebase.firestore.DocumentId
+import java.util.Date
 
 data class Task(
     @DocumentId
     val id: String = "",
     val title: String = "",
-    val date: String = "2022/01/01",
+    var createdAt: Date = Date(System.currentTimeMillis()),
 )
