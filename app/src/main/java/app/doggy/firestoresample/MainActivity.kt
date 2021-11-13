@@ -23,7 +23,8 @@ class MainActivity : AppCompatActivity() {
         // RecyclerViewの設定
         val taskAdapter = TaskAdapter()
         binding.recyclerView.adapter = taskAdapter
-        binding.recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.recyclerView.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
         // アプリ起動時に、保存されているデータを取得する
         db.collection(TASKS_PATH)

@@ -9,7 +9,7 @@ import app.doggy.firestoresample.databinding.TaskListItemBinding
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class TaskAdapter: ListAdapter<Task, TaskViewHolder>(diffUtilItemCallback) {
+class TaskAdapter : ListAdapter<Task, TaskViewHolder>(diffUtilItemCallback) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         val view = TaskListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return TaskViewHolder(view)
@@ -22,10 +22,11 @@ class TaskAdapter: ListAdapter<Task, TaskViewHolder>(diffUtilItemCallback) {
 
 class TaskViewHolder(
     private val binding: TaskListItemBinding
-): RecyclerView.ViewHolder(binding.root) {
+) : RecyclerView.ViewHolder(binding.root) {
     fun bind(task: Task) {
         binding.titleTextView.text = task.title
-        binding.dateTextView.text = SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.JAPANESE).format(task.createdAt)
+        binding.dateTextView.text =
+            SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.JAPANESE).format(task.createdAt)
     }
 }
 
@@ -33,6 +34,7 @@ private val diffUtilItemCallback = object : DiffUtil.ItemCallback<Task>() {
     override fun areContentsTheSame(oldItem: Task, newItem: Task): Boolean {
         return oldItem == newItem
     }
+
     override fun areItemsTheSame(oldItem: Task, newItem: Task): Boolean {
         return oldItem.id == newItem.id
     }
