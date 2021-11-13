@@ -31,14 +31,7 @@ class MainActivity : AppCompatActivity() {
             .get()
             .addOnSuccessListener { tasks ->
                 val taskList = ArrayList<Task>()
-                for (doc in tasks) {
-                    val task = doc.toObject<Task>()
-                    taskList.add(Task(
-                        id = task.id,
-                        title = task.title,
-                        date = task.date,
-                    ))
-                }
+                tasks.forEach { taskList.add(it.toObject()) }
                 taskAdapter.submitList(taskList)
             }
             .addOnFailureListener { exception ->
@@ -48,22 +41,14 @@ class MainActivity : AppCompatActivity() {
         // データの変更をリアルタイムでアプリに反映する
         val docRef = db.collection(TASKS_PATH)
         docRef.addSnapshotListener { tasks, e ->
-            val taskList = ArrayList<Task>()
-
             if (e != null) {
                 Log.w(READ_TAG, "Listen failed.", e)
                 return@addSnapshotListener
             }
 
             if (tasks != null) {
-                for (doc in tasks) {
-                    val task = doc.toObject<Task>()
-                    taskList.add(Task(
-                        id = task.id,
-                        title = task.title,
-                        date = task.date,
-                    ))
-                }
+                val taskList = ArrayList<Task>()
+                tasks.forEach { taskList.add(it.toObject()) }
                 taskAdapter.submitList(taskList)
             } else {
                 Log.d(READ_TAG, "Current data: null")
