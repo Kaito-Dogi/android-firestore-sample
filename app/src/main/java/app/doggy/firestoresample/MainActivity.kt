@@ -6,7 +6,6 @@ import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import app.doggy.firestoresample.databinding.ActivityMainBinding
 import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 
 class MainActivity : AppCompatActivity() {
@@ -31,7 +30,7 @@ class MainActivity : AppCompatActivity() {
             .get()
             .addOnSuccessListener { tasks ->
                 val taskList = ArrayList<Task>()
-                tasks.forEach { taskList.add(it.toObject()) }
+                tasks.forEach { taskList.add(it.toObject(Task::class.java)) }
                 taskAdapter.submitList(taskList)
             }
             .addOnFailureListener { exception ->
@@ -48,7 +47,7 @@ class MainActivity : AppCompatActivity() {
 
             if (tasks != null) {
                 val taskList = ArrayList<Task>()
-                tasks.forEach { taskList.add(it.toObject()) }
+                tasks.forEach { taskList.add(it.toObject(Task::class.java)) }
                 taskAdapter.submitList(taskList)
             } else {
                 Log.d(READ_TAG, "Current data: null")

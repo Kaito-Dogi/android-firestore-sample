@@ -1,9 +1,10 @@
 package app.doggy.firestoresample
 
-import java.util.UUID
+import com.google.firebase.firestore.DocumentId
 
 data class Task(
-    val id: String = UUID.randomUUID().toString(),
+    @DocumentId
+    val id: String = "",
     val title: String = "",
     val date: String = "2022/01/01",
 )
