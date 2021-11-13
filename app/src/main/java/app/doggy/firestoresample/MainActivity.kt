@@ -24,45 +24,43 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerView.adapter = taskAdapter
         binding.recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-        db.collection("tasks")
+        db.collection(TASKS_PATH)
             .get()
-            .addOnSuccessListener { value ->
-                val tasks = ArrayList<Task>()
-                for (doc in value) {
+            .addOnSuccessListener { tasks ->
+                val taskList = ArrayList<Task>()
+                for (doc in tasks) {
                     val task = doc.toObject<Task>()
-                    tasks.add(Task(
+                    taskList.add(Task(
                         id = task.id,
                         title = task.title,
                         date = task.date,
                     ))
                 }
-                Log.d(READ_TAG, tasks.toString())
-                taskAdapter.submitList(tasks)
+                taskAdapter.submitList(taskList)
             }
             .addOnFailureListener { exception ->
                 Log.d(READ_TAG, "Error getting documents: ", exception)
             }
 
-        val docRef = db.collection("tasks")
-        docRef.addSnapshotListener { value, e ->
-            val tasks = ArrayList<Task>()
+        val docRef = db.collection(TASKS_PATH)
+        docRef.addSnapshotListener { tasks, e ->
+            val taskList = ArrayList<Task>()
 
             if (e != null) {
                 Log.w(READ_TAG, "Listen failed.", e)
                 return@addSnapshotListener
             }
 
-            if (value != null) {
-                for (doc in value) {
+            if (tasks != null) {
+                for (doc in tasks) {
                     val task = doc.toObject<Task>()
-                    tasks.add(Task(
+                    taskList.add(Task(
                         id = task.id,
                         title = task.title,
                         date = task.date,
                     ))
                 }
-                Log.d(READ_TAG, tasks.toString())
-                taskAdapter.submitList(tasks)
+                taskAdapter.submitList(taskList)
             } else {
                 Log.d(READ_TAG, "Current data: null")
             }
@@ -76,7 +74,7 @@ class MainActivity : AppCompatActivity() {
             )
 
             // Add a new document with a generated ID
-            db.collection("tasks")
+            db.collection(TASKS_PATH)
                 .add(task)
                 .addOnSuccessListener { documentReference ->
                     Log.d(ADD_TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
@@ -90,5 +88,6 @@ class MainActivity : AppCompatActivity() {
     companion object {
         private const val ADD_TAG = "add_task"
         private const val READ_TAG = "read_task"
+        private const val TASKS_PATH = "tasks"
     }
 }
