@@ -1,6 +1,5 @@
 package app.doggy.firestoresample
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -11,12 +10,10 @@ import app.doggy.firestoresample.databinding.TaskListItemBinding
 class TaskAdapter: ListAdapter<Task, TaskViewHolder>(diffUtilItemCallback) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         val view = TaskListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        Log.d("read_task", "onCreateViewHolder")
         return TaskViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
-        Log.d("read_task", "onBindViewHolder")
         holder.bind(getItem(position))
     }
 }
@@ -27,7 +24,6 @@ class TaskViewHolder(
     fun bind(task: Task) {
         binding.titleTextView.text = task.title
         binding.dateTextView.text = task.date
-        Log.d("read_task", "bindできたお！")
     }
 }
 
