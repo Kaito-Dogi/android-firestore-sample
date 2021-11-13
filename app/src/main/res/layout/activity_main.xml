@@ -11,13 +11,20 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
         <EditText
             android:id="@+id/title_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="title"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:minHeight="48dp" />
 
         <EditText
             android:id="@+id/date_edit_text"
@@ -29,15 +36,10 @@
             android:minHeight="48dp" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/add_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Add" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
