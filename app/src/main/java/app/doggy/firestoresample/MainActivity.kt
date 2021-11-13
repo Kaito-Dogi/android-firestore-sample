@@ -18,12 +18,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater).apply { setContentView(this.root) }
 
+        // Firestoreをインスタンス化
         val db = Firebase.firestore
 
+        // RecyclerViewの設定
         val taskAdapter = TaskAdapter()
         binding.recyclerView.adapter = taskAdapter
         binding.recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
+        // アプリ起動時に、保存されているデータを取得する
         db.collection(TASKS_PATH)
             .get()
             .addOnSuccessListener { tasks ->
@@ -42,6 +45,7 @@ class MainActivity : AppCompatActivity() {
                 Log.d(READ_TAG, "Error getting documents: ", exception)
             }
 
+        // データの変更をリアルタイムでアプリに反映する
         val docRef = db.collection(TASKS_PATH)
         docRef.addSnapshotListener { tasks, e ->
             val taskList = ArrayList<Task>()
@@ -66,14 +70,13 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        // ボタンを押したときの処理
         binding.button.setOnClickListener {
-            // Create a new task with a first and last name
             val task = Task(
                 title = binding.titleEditText.text.toString(),
                 date = binding.dateEditText.text.toString(),
             )
 
-            // Add a new document with a generated ID
             db.collection(TASKS_PATH)
                 .add(task)
                 .addOnSuccessListener { documentReference ->
